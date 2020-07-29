@@ -1,0 +1,7 @@
+DEPENDENCIAS DE SYMFONY
+
+composer create-project symfony/skeleton nombre_api "4.2.*" == Crea un nuevo proyecto en symfony
+composer require doctrine maker = Instala el paquete maker para la creacion de contenido
+composer require symfony/apache-pack = Instala un modulo que permite correr la api por medio de apache
+
+php bin/console make:controller nombre_controlador == Crea un nuevo nombre_controlador
