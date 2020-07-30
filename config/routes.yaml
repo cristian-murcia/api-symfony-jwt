@@ -2,6 +2,15 @@
 #    path: /
 #    controller: App\Controller\DefaultController::index
 
-index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+# RUTAS DE CONTROLADOR: USUARIO #
+
+user:
+    path: /user
+    controller: App\Controller\UserController::index
+
+
+# RUTAS DEL CONTROLADOR: VIDEO #
+
+video:
+    path: /video
+    controller: App\Controller\VideoController::index

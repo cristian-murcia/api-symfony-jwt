@@ -81,8 +81,17 @@
     "doctrine/reflection": {
         "version": "1.2.1"
     },
+    "firebase/php-jwt": {
+        "version": "v3.0.0"
+    },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
+    },
+    "knplabs/knp-components": {
+        "version": "v1.3.10"
+    },
+    "knplabs/knp-paginator-bundle": {
+        "version": "v3.0.0"
     },
     "nikic/php-parser": {
         "version": "v4.7.0"
@@ -116,6 +125,9 @@
         "files": [
             "./public/.htaccess"
         ]
+    },
+    "symfony/asset": {
+        "version": "v4.2.12"
     },
     "symfony/cache": {
         "version": "v4.2.12"
@@ -226,14 +238,46 @@
             "./config/routes.yaml"
         ]
     },
+    "symfony/serializer": {
+        "version": "v4.2.12"
+    },
     "symfony/stopwatch": {
         "version": "v4.2.12"
+    },
+    "symfony/translation": {
+        "version": "3.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "3.3",
+            "ref": "2ad9d2545bce8ca1a863e50e92141f0b9d87ffcd"
+        },
+        "files": [
+            "./config/packages/translation.yaml",
+            "./translations/.gitignore"
+        ]
+    },
+    "symfony/validator": {
+        "version": "4.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.1",
+            "ref": "21ab70175caf1e4b273791364fb30d27f1153546"
+        },
+        "files": [
+            "./config/packages/test/validator.yaml",
+            "./config/packages/validator.yaml"
+        ]
     },
     "symfony/var-exporter": {
         "version": "v4.2.12"
     },
     "symfony/yaml": {
         "version": "v4.2.12"
+    },
+    "twig/twig": {
+        "version": "v2.13.0"
     },
     "zendframework/zend-code": {
         "version": "3.4.1"
