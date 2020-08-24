@@ -17,12 +17,12 @@ class JwtAuth {
 
     //Metodo para la creación del Token
     public function signup($email, $password, $getToken = null) {
-        
+
         $user = $this->manager->getRepository(User::class)->findOneBy([
             'email' => $email,
             'password' => $password
         ]);
-        
+
         $signup = false;
         if (is_object($user)) {
             $signup = true;
@@ -54,6 +54,31 @@ class JwtAuth {
         }
 
         return $data;
+    }
+
+    //Metodo para verificar el token
+    public function checkToken($jwt, $identity = false) {
+        $auth = false;
+
+        try {
+            $decoded = JWT::decode($jwt, $this->key, ['HS256']);
+        } catch (\UnexpectedValueException $e) {
+            $auth = false;
+        } catch (\DomainException $e) {
+            $auth = false;
+        }
+
+        if (isset($decoded) && !empty($decoded) && is_object($decoded) && isset($decoded->sub)) {
+            $auth = true;
+        } else {
+            $auth = false;
+        }
+
+        if ($identity != false) {
+            $auth = $decoded;
+        }
+
+        return $auth;
     }
 
 }

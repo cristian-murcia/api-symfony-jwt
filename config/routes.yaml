@@ -19,6 +19,11 @@ login:
     controller: App\Controller\UserController::login
     methods: [POST]
 
+updateUser:
+    path: /updateUser
+    controller: App\Controller\UserController::updateUser
+    methods: [PUT]
+
 
 # RUTAS DEL CONTROLADOR: VIDEO #
 

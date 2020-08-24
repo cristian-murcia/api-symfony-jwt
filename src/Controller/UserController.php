@@ -140,11 +140,11 @@ class UserController extends AbstractController {
             ]);
 
             if (!empty($email) && !empty($password) && count($validate_email) == 0) {
-                
-                
+
+
                 $pwd = hash('sha256', $password);
 
-                if($getToken){
+                if ($getToken) {
                     $signup = $jwt_auth->signup($email, $pwd, $getToken);
                 } else {
                     $signup = $jwt_auth->signup($email, $pwd);
@@ -156,6 +156,83 @@ class UserController extends AbstractController {
                     'code' => 400,
                     'status' => 'error',
                     'message' => 'Datos no validos'
+                ];
+            }
+        }
+
+        return $this->resJson($data);
+    }
+
+    //Metodo para la actualizacion de datos de usuario
+    public function updateUser(Request $request, JwtAuth $jwt_auth) {
+
+        $token = $request->headers->get('Authorization');
+
+        $auth_Check = $jwt_auth->checkToken($token);
+
+        if ($auth_Check) {
+
+            $em = $this->getDoctrine()->getManager();
+            $identity = $jwt_auth->checkToken($token, true);
+
+            $user_repo = $this->getDoctrine()->getRepository(User::class);
+            $user = $user_repo->findOneBy([
+                'id' => $identity->sub
+            ]);
+
+            $json = $request->get('json', null);
+            $params = json_decode($json);
+
+            if (!empty($json)) {
+
+                $name = (!empty($params->name)) ? $params->name : null;
+                $surname = (!empty($params->surname)) ? $params->surname : null;
+                $email = (!empty($params->email)) ? $params->email : null;
+
+                $validator = Validation::createValidator();
+                $validate_email = $validator->validate($email, [
+                    new Email()
+                ]);
+
+                if (!empty($email) && count($validate_email) == 0 && !empty($name) && !empty($surname)) {
+
+                    $user->setName($name);
+                    $user->setSurname($surname);
+                    $user->setEmail($email);
+
+                    $isset_user = $user_repo->findBy([
+                        'email' => $email
+                    ]);
+
+                    if (count($isset_user) == 0 || $identity->email == $email) {
+                        $em->persist($user);
+                        $em->flush();
+
+                        $data = [
+                            'code' => 200,
+                            'status' => 'success',
+                            'message' => 'El usuario ha sido actualizado',
+                            'user' => $user
+                        ];
+                    } else {
+                        $data = [
+                            'code' => 400,
+                            'status' => 'error',
+                            'message' => 'No puedes usar este email'
+                        ];
+                    }
+                } else {
+                    $data = [
+                        'code' => 400,
+                        'status' => 'error',
+                        'message' => 'Los datos no son correctos'
+                    ];
+                }
+            } else {
+                $data = [
+                    'code' => 400,
+                    'status' => 'error',
+                    'message' => 'Los campos son requeridos'
                 ];
             }
         }
